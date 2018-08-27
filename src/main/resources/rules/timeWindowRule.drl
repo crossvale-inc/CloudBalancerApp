@@ -2,21 +2,33 @@ package rules
 
 import com.crossvale.model.FleetOut;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 function boolean isBetween(int start, int end ){
-	DateTime dt = new DateTime();
-    int hhmm = dt.getHourOfDay()*100 + dt.getMinuteOfDay();
-    //System.out.println("hhmm is*************************** " + hhmm);
-    //System.out.println(start <= hhmm && hhmm < end);
+	DateTime dt = new DateTime(DateTimeZone.UTC);
+    int hhmm = dt.getHourOfDay()*100 + dt.getMinuteOfHour();
+    System.out.println("hhmm is *************************** " + hhmm);
+    //System.out.println("HourOfDay is *************************** " + dt.getHourOfDay());
+    //System.out.println("MinuteofDay is *************************** " + dt.getMinuteOfHour());
     return start <= hhmm && hhmm < end;
 }
 
-rule "FleetA 0-2400"
+rule "FleetA 0-1200"
 //ruleflow-group "FleetA"
 //lock-on-active 
 	when 
-		fleetObject: FleetOut(isBetween(0, 250000))
+		fleetObject: FleetOut(isBetween(0, 1200))
 	then
 		fleetObject.setTargetCapacity(15);
+		System.out.println("Firing rule: " + drools.getRule().getName());
+	end
+
+rule "FleetA 1200-2400"
+//ruleflow-group "FleetA"
+//lock-on-active 
+	when 
+		fleetObject: FleetOut(isBetween(1200, 24000))
+	then
+		fleetObject.setTargetCapacity(22);
 		System.out.println("Firing rule: " + drools.getRule().getName());
 	end

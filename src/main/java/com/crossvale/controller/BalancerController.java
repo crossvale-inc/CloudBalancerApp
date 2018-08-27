@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,16 +14,11 @@ import com.crossvale.model.ClusterOutput;
 @RestController
 public class BalancerController {
 
-	//private final BalancerService balancerService;
-	
-	BalancerService balancerService = new BalancerService();
+	private final BalancerService balancerService;
 
-	/*@Autowired
+	@Autowired
 	public BalancerController(BalancerService balancerService) {
 		this.balancerService = balancerService;
-	}*/
-	public BalancerController() {
-		
 	}
 
 	@RequestMapping(value = "/balancer", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
