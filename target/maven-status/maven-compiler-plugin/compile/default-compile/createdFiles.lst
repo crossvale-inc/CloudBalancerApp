@@ -1,10 +1,12 @@
 com/crossvale/model/Type.class
 com/crossvale/model/FleetOut.class
-com/crossvale/model/Product.class
 com/crossvale/model/ClusterInput.class
+com/crossvale/model/Product.class
 com/crossvale/controller/BalancerController.class
 com/crossvale/model/Fleet.class
+com/crossvale/Utils.class
 com/crossvale/BalancerApp.class
+com/crossvale/ResourceWatcher.class
 com/crossvale/model/ClusterOutput.class
 com/crossvale/model/ClusterOut.class
 com/crossvale/model/Price.class

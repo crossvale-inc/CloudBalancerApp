@@ -6,21 +6,17 @@ import org.joda.time.DateTime;
 function boolean isBetween(int start, int end ){
 	DateTime dt = new DateTime();
     int hhmm = dt.getHourOfDay()*100 + dt.getMinuteOfDay();
-    System.out.println("Hour of Day: " + hhmm);
+    //System.out.println("hhmm is*************************** " + hhmm);
+    //System.out.println(start <= hhmm && hhmm < end);
     return start <= hhmm && hhmm < end;
 }
 
-rule "FleetA 0-1200"
+rule "FleetA 0-2400"
+//ruleflow-group "FleetA"
+//lock-on-active 
 	when 
-		fleetObject: FleetOut(name.equals("fleetA") && isBetween(0, 1200))
+		fleetObject: FleetOut(isBetween(0, 250000))
 	then
 		fleetObject.setTargetCapacity(15);
-		System.out.println("Firing rule: " + drools.getRule().getName());
-	end
-rule "FleetA 1200-2400"
-	when 
-		fleetObject: FleetOut(name.equals("fleetA") && isBetween(1200, 2400))
-	then
-		fleetObject.setTargetCapacity(25);
 		System.out.println("Firing rule: " + drools.getRule().getName());
 	end
