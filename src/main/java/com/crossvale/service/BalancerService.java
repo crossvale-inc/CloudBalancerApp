@@ -50,11 +50,8 @@ public class BalancerService {
 				fleetOut.setName(fleet.getName());
 				fleetOut.setTargetCapacity(fleet.getCurrentCapacity());
 				
-				DateTime date = new DateTime();
-				
 				KieSession kieSession = kieContainer.newKieSession("rulesSession");
 				kieSession.insert(fleetOut);
-				kieSession.insert(date);
 				kieSession.fireAllRules();
 				kieSession.dispose();
 				
