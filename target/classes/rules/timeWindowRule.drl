@@ -3,6 +3,7 @@ package rules
 import com.crossvale.model.FleetOut;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import com.crossvale.model.Cluster;
 
 function boolean isBetween(int start, int end ){
 	DateTime dt = new DateTime(DateTimeZone.UTC);
@@ -14,27 +15,25 @@ function boolean isBetween(int start, int end ){
 }
 
 rule "FleetA 0-1200"
-//ruleflow-group "FleetA"
 lock-on-active 
 	when 
 		fleetObject: FleetOut(name == "fleetA", isBetween(0, 1200))
-		
+		cluster: Cluster(name == "Crossvale-AWS")		
 	then
 		fleetObject.setTargetCapacity(15);
 		System.out.println("Firing rule: " + drools.getRule().getName());
 	end
 
 rule "FleetA 1200-2400"
-//ruleflow-group "FleetA"
 lock-on-active 
 	when 
 		fleetObject: FleetOut(name == "fleetA", isBetween(1200, 24000))
+		cluster: Cluster(name == "Crossvale-AWS2")
 	then
 		fleetObject.setTargetCapacity(22);
 		System.out.println("Firing rule: " + drools.getRule().getName());
 	end
 rule "FleetB 0-1200"
-//ruleflow-group "FleetA"
 lock-on-active 
 	when 
 		fleetObject: FleetOut(name == "fleetB", isBetween(0, 1200))
@@ -45,7 +44,6 @@ lock-on-active
 	end
 
 rule "FleetB 1200-2400"
-//ruleflow-group "FleetA"
 lock-on-active 
 	when 
 		fleetObject: FleetOut(name == "fleetB", isBetween(1200, 24000))

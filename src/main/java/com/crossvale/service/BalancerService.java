@@ -45,6 +45,7 @@ public class BalancerService {
 				KieSession kieSession = kieContainer.newKieSession("rulesSession");
 				//KieSession ksession = kbase.newKieSession();
 				kieSession.insert(fleetOut);
+				kieSession.insert(cluster);
 				kieSession.fireAllRules();
 				kieSession.dispose();
 				
