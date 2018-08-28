@@ -1,6 +1,4 @@
-com/crossvale/model/Type.class
 com/crossvale/model/FleetOut.class
-com/crossvale/model/Product.class
 com/crossvale/model/ClusterInput.class
 com/crossvale/controller/BalancerController.class
 com/crossvale/model/Fleet.class

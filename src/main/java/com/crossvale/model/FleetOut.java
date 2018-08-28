@@ -10,6 +10,8 @@ public class FleetOut implements java.io.Serializable {
 
 	@org.kie.api.definition.type.Label("name")
 	private java.lang.String name;
+	@org.kie.api.definition.type.Label("currentTime")
+	private int currentTime;
 	@org.kie.api.definition.type.Label("targetCapacity")
 	private java.lang.Integer targetCapacity;
 
@@ -30,6 +32,13 @@ public class FleetOut implements java.io.Serializable {
 		this.name = name;
 	}
 
+	public int getCurrentTime() {
+		return this.currentTime;
+	}
+
+	public void setCurrentTime(int currentTime) {
+		this.currentTime = currentTime;
+	}
 	public java.lang.Integer getTargetCapacity() {
 		return this.targetCapacity;
 	}
@@ -55,11 +64,12 @@ public class FleetOut implements java.io.Serializable {
 	}
 
 	public FleetOut(java.lang.String name, java.lang.Integer targetCapacity, java.lang.Integer currentCapacity,
-			java.lang.String id) {
+			java.lang.String id, int currentTime) {
 		this.name = name;
 		this.targetCapacity = targetCapacity;
 		this.currentCapacity = currentCapacity;
 		this.id = id;
+		this.currentTime = currentTime;
 	}
 
 }

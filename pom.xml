@@ -47,6 +47,12 @@
     		<version>2.10</version>
 		</dependency>
 
+	<dependency>
+		<groupId>org.drools</groupId>
+		<artifactId>drools-decisiontables</artifactId>
+		<version>6.1.0.Final</version>
+	</dependency>
+
 	</dependencies>
 	<build>
 	<plugins>
