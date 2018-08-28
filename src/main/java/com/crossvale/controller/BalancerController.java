@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crossvale.model.ClusterInput;
@@ -20,9 +21,10 @@ public class BalancerController {
 	public BalancerController(BalancerService balancerService) {
 		this.balancerService = balancerService;
 	}
-
+	
 	@RequestMapping(value = "/balancer", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	@ResponseBody
+	@CrossOrigin
 	public ClusterOutput getQuestions(@RequestBody ClusterInput clusterInput) {
 		
 		ClusterOutput clusterOutput = new ClusterOutput();;
