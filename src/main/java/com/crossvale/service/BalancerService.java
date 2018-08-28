@@ -29,9 +29,10 @@ public class BalancerService {
 	public ClusterOutput createClusterOutput(ClusterInput clusterInput) {
 		
 		List<ClusterOut> clusterOutList = new ArrayList<>();
-		List<FleetOut> fleetOutList = new ArrayList<>();
-		
+				
 		for(Cluster cluster : clusterInput.getCluster()) {
+			
+			List<FleetOut> fleetOutList = new ArrayList<>();
 			
 			for(Fleet fleet : cluster.getFleet()) {
 				

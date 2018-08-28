@@ -15,9 +15,10 @@ function boolean isBetween(int start, int end ){
 
 rule "FleetA 0-1200"
 //ruleflow-group "FleetA"
-//lock-on-active 
+lock-on-active 
 	when 
-		fleetObject: FleetOut(isBetween(0, 1200))
+		fleetObject: FleetOut(name == "fleetA", isBetween(0, 1200))
+		
 	then
 		fleetObject.setTargetCapacity(15);
 		System.out.println("Firing rule: " + drools.getRule().getName());
@@ -25,9 +26,29 @@ rule "FleetA 0-1200"
 
 rule "FleetA 1200-2400"
 //ruleflow-group "FleetA"
-//lock-on-active 
+lock-on-active 
 	when 
-		fleetObject: FleetOut(isBetween(1200, 24000))
+		fleetObject: FleetOut(name == "fleetA", isBetween(1200, 24000))
+	then
+		fleetObject.setTargetCapacity(22);
+		System.out.println("Firing rule: " + drools.getRule().getName());
+	end
+rule "FleetB 0-1200"
+//ruleflow-group "FleetA"
+lock-on-active 
+	when 
+		fleetObject: FleetOut(name == "fleetB", isBetween(0, 1200))
+		
+	then
+		fleetObject.setTargetCapacity(15);
+		System.out.println("Firing rule: " + drools.getRule().getName());
+	end
+
+rule "FleetB 1200-2400"
+//ruleflow-group "FleetA"
+lock-on-active 
+	when 
+		fleetObject: FleetOut(name == "fleetB", isBetween(1200, 24000))
 	then
 		fleetObject.setTargetCapacity(22);
 		System.out.println("Firing rule: " + drools.getRule().getName());
