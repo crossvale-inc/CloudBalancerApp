@@ -6,5 +6,6 @@ com/crossvale/BalancerApp.class
 com/crossvale/model/ClusterOutput.class
 com/crossvale/model/ClusterOut.class
 com/crossvale/model/Price.class
+com/crossvale/model/FleetEval.class
 com/crossvale/service/BalancerService.class
 com/crossvale/model/Cluster.class

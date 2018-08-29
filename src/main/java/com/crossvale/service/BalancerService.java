@@ -17,6 +17,7 @@ import com.crossvale.model.FleetOut;
 import com.crossvale.model.ClusterOut;
 import com.crossvale.model.Cluster;
 import com.crossvale.model.Fleet;
+import com.crossvale.model.FleetEval;
 
 @Service
 public class BalancerService {
@@ -31,6 +32,10 @@ public class BalancerService {
 	
 	public ClusterOutput createClusterOutput(ClusterInput clusterInput) {
 		
+		ClusterOutput clusterOutput = new ClusterOutput();
+		
+		try {
+		
 		List<ClusterOut> clusterOutList = new ArrayList<>();
 		DateTime dt = new DateTime(DateTimeZone.UTC);
 	    int hhmm = dt.getHourOfDay()*100 + dt.getMinuteOfHour();
@@ -41,20 +46,28 @@ public class BalancerService {
 			
 			for(Fleet fleet : cluster.getFleet()) {
 				
-				FleetOut fleetOut = new FleetOut();				
-				fleetOut.setCurrentCapacity(fleet.getCurrentCapacity());
-				fleetOut.setId(fleet.getId());
-				fleetOut.setCurrentTime(hhmm);
-				fleetOut.setName(fleet.getName());
-				fleetOut.setTargetCapacity(fleet.getCurrentCapacity());
+				FleetOut fleetOut = new FleetOut();		
+				FleetEval fleetEval = new FleetEval();
+				fleetEval.setCurrentCapacity(fleet.getCurrentCapacity());
+				fleetEval.setId(fleet.getId());
+				fleetEval.setCurrentTime(hhmm);
+				fleetEval.setName(fleet.getName());
+				fleetEval.setTargetCapacity(fleet.getCurrentCapacity());
+				fleetEval.setCpuLoad(Integer.parseInt(fleet.getCpuLoad().replaceAll("%$", "")));
+				fleetEval.setMemoryLoad(Integer.parseInt(fleet.getMemoryLoad().replaceAll("%$", "")));
+				fleetEval.setNetworkLoad(Integer.parseInt(fleet.getNetworkLoad().replaceAll("%$", "")));
+				System.out.println("Fleet Memory Load: " + fleetEval.getMemoryLoad() + " Fleet ID " + fleetEval.getId());
 				
 				KieSession kieSession = kieContainer.newKieSession("rulesSession");
-				//KieSession ksession = kbase.newKieSession();
-				//kieSession.setGlobal("hhmm", hhmm);
-				kieSession.insert(fleetOut);
-				kieSession.insert(cluster);
+				kieSession.insert(fleetEval);
 				kieSession.fireAllRules();
 				kieSession.dispose();
+				
+				fleetOut.setCurrentCapacity(fleetEval.getCurrentCapacity());
+				fleetOut.setId(fleetEval.getId());
+				fleetOut.setCurrentTime(hhmm);
+				fleetOut.setName(fleetEval.getName());
+				fleetOut.setTargetCapacity(fleetEval.getTargetCapacity());
 				
 				fleetOutList.add(fleetOut);
 				
@@ -68,9 +81,12 @@ public class BalancerService {
 			clusterOutList.add(clusterOut);
 		}
 		
-		ClusterOutput clusterOutput = new ClusterOutput(clusterOutList);
-		
+		clusterOutput.setCluster(clusterOutList);
 
+		} catch (Throwable t) {
+            t.printStackTrace();
+        }
+		
 		return clusterOutput;
 	}
 }
