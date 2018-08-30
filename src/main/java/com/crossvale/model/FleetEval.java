@@ -27,6 +27,8 @@ public class FleetEval implements java.io.Serializable {
 	private int memoryLoad;
 	@org.kie.api.definition.type.Label(value = "networkLoad")
 	private int networkLoad;
+	@org.kie.api.definition.type.Label(value = "filter")
+	private boolean filter;
 
 	public FleetEval() {
 	}
@@ -93,9 +95,17 @@ public class FleetEval implements java.io.Serializable {
 	public void setCpuLoad(int cpuLoad) {
 		this.cpuLoad = cpuLoad;
 	}
+	
+	public boolean getFilter() {
+		return this.filter;
+	}
+
+	public void setFilter(boolean filter) {
+		this.filter = filter;
+	}
 
 	public FleetEval(java.lang.String name, java.lang.Integer targetCapacity, java.lang.Integer currentCapacity,
-			java.lang.String id, int currentTime, int memoryLoad, int networkLoad, int cpuLoad) {
+			java.lang.String id, int currentTime, int memoryLoad, int networkLoad, int cpuLoad, boolean filter) {
 		this.name = name;
 		this.targetCapacity = targetCapacity;
 		this.currentCapacity = currentCapacity;
@@ -104,6 +114,7 @@ public class FleetEval implements java.io.Serializable {
 		this.memoryLoad = memoryLoad;
 		this.cpuLoad = cpuLoad;
 		this.networkLoad = networkLoad;
+		this.filter = filter;
 	}
 
 }

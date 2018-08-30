@@ -6,6 +6,7 @@ import java.lang.Integer;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.Agenda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.joda.time.DateTime;
@@ -56,12 +57,25 @@ public class BalancerService {
 				fleetEval.setCpuLoad(Integer.parseInt(fleet.getCpuLoad().replaceAll("%$", "")));
 				fleetEval.setMemoryLoad(Integer.parseInt(fleet.getMemoryLoad().replaceAll("%$", "")));
 				fleetEval.setNetworkLoad(Integer.parseInt(fleet.getNetworkLoad().replaceAll("%$", "")));
-				System.out.println("Fleet Memory Load: " + fleetEval.getMemoryLoad() + " Fleet ID " + fleetEval.getId());
+				fleetEval.setFilter(false);
+				//System.out.println("Fleet Memory Load: " + fleetEval.getMemoryLoad() + " Fleet ID " + fleetEval.getId());
 				
 				KieSession kieSession = kieContainer.newKieSession("rulesSession");
+				Agenda agenda = kieSession.getAgenda();
 				kieSession.insert(fleetEval);
+				
+				agenda.getAgendaGroup("lowerlimit").setFocus();
+				agenda.getAgendaGroup("upperlimit").setFocus();
+				agenda.getAgendaGroup("underload").setFocus();
+				agenda.getAgendaGroup("overload").setFocus();
+				agenda.getAgendaGroup("adhoc").setFocus();
+				agenda.getAgendaGroup("default").setFocus();
+				agenda.getAgendaGroup("override").setFocus();
+				
 				kieSession.fireAllRules();
 				kieSession.dispose();
+				
+				System.out.println("Filter Setting: " + fleetEval.getFilter());
 				
 				fleetOut.setCurrentCapacity(fleetEval.getCurrentCapacity());
 				fleetOut.setId(fleetEval.getId());
